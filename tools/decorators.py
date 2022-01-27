@@ -15,7 +15,7 @@ def __print_results(statistics: dict) -> None:
     BOLD, YELLOW, RED, NORMAL = "\033[1m", "\033[93m", "\033[91m", "\033[0m"
 
     inconsistent_message = (
-        f" - {YELLOW} ⚠ WARNING!!! inconsistent length{NORMAL}"
+        f"{YELLOW} ⚠ WARNING: inconsistent length{NORMAL}"
         if statistics.get("arr_len") != statistics.get("arr_result_len")
         else ""
     )
@@ -24,8 +24,8 @@ def __print_results(statistics: dict) -> None:
     print(
         f"""'{BOLD}{statistics.get("function_name")}{NORMAL}' statistics
         {valid_sort_message}
-        array size:{statistics.get("arr_size")} - array result size: {statistics.get("arr_result_size")}
-        array length: {statistics.get("arr_len")} - result array length: {statistics.get("arr_result_len")} {inconsistent_message}
+        array size: {statistics.get("arr_size")} - array result size: {statistics.get("arr_result_size")}
+        array length: {statistics.get("arr_len")} - result array length: {statistics.get("arr_result_len")}{inconsistent_message}
         order time: {statistics.get("total_time")}
         memory used: {statistics.get("used_size_memory")}KiB, peak memory used: {statistics.get("peak_size_memory")}KiB"""
     )

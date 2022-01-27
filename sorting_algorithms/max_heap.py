@@ -66,7 +66,7 @@ class MaxHeap:
 
         ordered_array = []
 
-        for _ in range(1, arr_len):
+        for _ in range(1, arr_len + 1):
 
             # Insert in the list the value of the tree root
             # which is the highest value of the structure

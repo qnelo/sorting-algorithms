@@ -7,10 +7,13 @@ large_array = random_array(array_length=7000, biggest_number=1000000000000000)
 
 
 # heap sort using max heap with binary tree
-tree_max_heap_sort_result = tree_max_heap_sort(large_array[:])
+_, tmhs_stats = tree_max_heap_sort(large_array[:])
+tmhs_stats.print()
 
 # bubble sort test
-bubble_result = bubble_sort(large_array[:])
+_, bs_stats = bubble_sort(large_array[:])
+bs_stats.print()
 
 # heap sort using array implementation
-array_max_heap_sort_result = array_max_heap_sort(large_array[:])
+_, amhs_stats = array_max_heap_sort(large_array[:])
+amhs_stats.print()

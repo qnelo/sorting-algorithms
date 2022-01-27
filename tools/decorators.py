@@ -3,32 +3,35 @@ import time
 import tracemalloc
 
 
+class Statistics:
+    def __init__(self, stats: dict) -> None:
+        self.stats = stats
+
+    def print(self) -> None:
+        BOLD, YELLOW, RED, NORMAL = "\033[1m", "\033[93m", "\033[91m", "\033[0m"
+
+        inconsistent_message = (
+            f"{YELLOW} ⚠ WARNING: inconsistent length{NORMAL}"
+            if self.stats.get("arr_len") != self.stats.get("arr_result_len")
+            else ""
+        )
+        valid_sort_message = f"List{'' if self.stats.get('valid_sort') else f' {RED}NOT{NORMAL}'} sorted correctly"
+
+        print(
+            f"""'{BOLD}{self.stats.get("function_name")}{NORMAL}' statistics
+            {valid_sort_message}
+            array size: {self.stats.get("arr_size")} - array result size: {self.stats.get("arr_result_size")}
+            array length: {self.stats.get("arr_len")} - result array length: {self.stats.get("arr_result_len")}{inconsistent_message}
+            order time: {self.stats.get("total_time")}
+            memory used: {self.stats.get("used_size_memory")}KiB, peak memory used: {self.stats.get("peak_size_memory")}KiB"""
+        )
+
+
 def __verifier(arr: int) -> bool:
     for i in range(len(arr) - 1):
         if arr[i] > arr[i + 1]:
             return False
     return True
-
-
-def __print_results(statistics: dict) -> None:
-
-    BOLD, YELLOW, RED, NORMAL = "\033[1m", "\033[93m", "\033[91m", "\033[0m"
-
-    inconsistent_message = (
-        f"{YELLOW} ⚠ WARNING: inconsistent length{NORMAL}"
-        if statistics.get("arr_len") != statistics.get("arr_result_len")
-        else ""
-    )
-    valid_sort_message = f"List{'' if statistics.get('valid_sort') else f' {RED}NOT{NORMAL}'} sorted correctly"
-
-    print(
-        f"""'{BOLD}{statistics.get("function_name")}{NORMAL}' statistics
-        {valid_sort_message}
-        array size: {statistics.get("arr_size")} - array result size: {statistics.get("arr_result_size")}
-        array length: {statistics.get("arr_len")} - result array length: {statistics.get("arr_result_len")}{inconsistent_message}
-        order time: {statistics.get("total_time")}
-        memory used: {statistics.get("used_size_memory")}KiB, peak memory used: {statistics.get("peak_size_memory")}KiB"""
-    )
 
 
 def statistics(func):
@@ -43,7 +46,7 @@ def statistics(func):
         tracemalloc.stop()
         total_time = time.time() - start_time
 
-        statistics = {
+        stats = {
             "function_name": func.__name__,
             "arr_len": len(args[0]),
             "arr_size": sys.getsizeof(args[0]),
@@ -54,7 +57,7 @@ def statistics(func):
             "used_size_memory": used_size_memory,
             "peak_size_memory": peak_size_memory,
         }
-        __print_results(statistics=statistics)
-        return arr_result, statistics
+
+        return arr_result, Statistics(stats=stats)
 
     return wrapper

@@ -6,9 +6,6 @@ install: venv
 run:
 	. venv/bin/activate && python3 main.py
 
-generate_array:
-	. venv/bin/activate && python3 generate_large_array.py
-
 check_code:
 	. venv/bin/activate && isort . && black .
 

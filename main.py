@@ -1,7 +1,7 @@
-from generate_large_array import random_array
 from sorting_algorithms.bubble_sort import bubble_sort
 from sorting_algorithms.max_heap import max_heap_sort as tree_mh_sort
 from sorting_algorithms.max_heap_arr import max_heap_sort as array_mh_sort
+from tools.generate_large_array import random_array
 
 large_array = random_array(array_length=7000, biggest_number=1000000000000000)
 

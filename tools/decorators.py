@@ -10,19 +10,19 @@ def __verifier(arr: int) -> bool:
     return True
 
 
-def print_results(statistics: dict) -> None:
+def __print_results(statistics: dict) -> None:
+
+    BOLD, YELLOW, RED, NORMAL = "\033[1m", "\033[93m", "\033[91m", "\033[0m"
 
     inconsistent_message = (
-        " - ⚠ WARNING!!! inconsistent length"
+        f" - {YELLOW} ⚠ WARNING!!! inconsistent length{NORMAL}"
         if statistics.get("arr_len") != statistics.get("arr_result_len")
         else ""
     )
-    valid_sort_message = (
-        f"List{'' if statistics.get('valid_sort') else ' NOT'} sorted correctly"
-    )
+    valid_sort_message = f"List{'' if statistics.get('valid_sort') else f' {RED}NOT{NORMAL}'} sorted correctly"
 
     print(
-        f"""'{statistics.get("function_name")}' statistics
+        f"""'{BOLD}{statistics.get("function_name")}{NORMAL}' statistics
         {valid_sort_message}
         array size:{statistics.get("arr_size")} - array result size: {statistics.get("arr_result_size")}
         array length: {statistics.get("arr_len")} - result array length: {statistics.get("arr_result_len")} {inconsistent_message}
@@ -54,7 +54,7 @@ def statistics(func):
             "used_size_memory": used_size_memory,
             "peak_size_memory": peak_size_memory,
         }
-        print_results(statistics=statistics)
+        __print_results(statistics=statistics)
         return arr_result, statistics
 
     return wrapper

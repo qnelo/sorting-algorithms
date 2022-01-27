@@ -1,6 +1,7 @@
 import sys
 import time
 import tracemalloc
+from types import FunctionType
 
 
 class Statistics:
@@ -34,8 +35,8 @@ def __verifier(arr: int) -> bool:
     return True
 
 
-def statistics(func):
-    def wrapper(*args, **kwargs):
+def statistics(func: FunctionType) -> FunctionType:
+    def wrapper(*args, **kwargs) -> tuple:
 
         start_time = time.time()
         tracemalloc.start()

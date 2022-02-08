@@ -5,7 +5,7 @@ from tools.generate_large_array import random_array
 
 
 def main():
-    large_array = random_array(array_length=2000, biggest_number=1000000000000000)
+    large_array = random_array(array_length=1500, biggest_number=1000000000000000)
 
     # large_array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
 

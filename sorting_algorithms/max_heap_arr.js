@@ -1,61 +1,61 @@
-const maxValue = (arr, index) => {
-  const left = index * 2 + 1
-  const right = index * 2 + 2
+const statistics = require("../tools/decorators")
 
-  let max = left
+/**
+ * Get the index of the max value between parent and boot children
+ * @param {Array} arr Array to sort
+ * @param {Number} index index of the array to compare
+ * @returns {Number} max index value, "-1" if parent have the max value
+ */
+const maxIndexValue = (arr, index) => {
+  const left = index * 2 + 1;
+  const right = index * 2 + 2;
+
+  let max = left;
   if (arr[left] < arr[right]) {
-    max = right
+    max = right;
   }
   if (arr[index] > arr[max]) {
-    max = false
+    max = -1;
   }
 
-  return max
+  return max;
 }
 
-const swapper = (a, i, j) => ([a[i], a[j]] = [a[j], a[i]])
-
 const maxHeap = (arr) => {
-  let breakFor = false
+  // TODO, add as parameter length of array to dont have to create another array
+  let breakFor = false;
 
   for (let index = 0; index < Math.floor(arr.length / 2); index++) {
-    const maxIndex = maxValue(arr, index)
-    if (maxIndex) {
-      swapper(arr, maxIndex, index)
-      breakFor = true
-      break
+    const maxIndex = maxIndexValue(arr, index);
+    if (maxIndex >= 0) {
+      [arr[maxIndex], arr[index]] = [arr[index], arr[maxIndex]];
+      breakFor = true;
+      break;
     }
   }
   if (breakFor) {
-    maxHeap(arr)
+    maxHeap(arr);
   }
 }
 
-const confirm = (arr) => {
-  for (let index = 0; index < arr.length - 1; index++) {
-    if (arr[index] > arr[index + 1]) {
-      return false
-    }
-  }
-  return true
-}
 
+/**
+ * Order an array use Max Heap Sort technique
+ * @param {Array} arr array to sort
+ * @returns {Boolean} if is ordered
+ */
 const maxHeapSort = (arr) => {
-  maxHeap(arr)
-  const orderedArr = []
-  const arrLength = arr.length - 1
+  maxHeap(arr);
+  const orderedArr = [];
+  const arrLength = arr.length - 1;
 
-  for (let index = 0; index < arrLength; index++) {
-    const lastPosition = arrLength - index
-    swapper(arr, lastPosition, 0)
-    orderedArr.splice(0, 0, arr.pop())
-    maxHeap(arr)
+  for (let index = 0; index <= arrLength; index++) {
+    const lastPosition = arrLength - index;
+    [arr[lastPosition], arr[0]] = [arr[0], arr[lastPosition]]
+    orderedArr.splice(0, 0, arr.pop());
+    maxHeap(arr);
   }
-  const valid = confirm(arr)
-  if (valid) {
-    return orderedArr
-  }
-  return false
+  return orderedArr;
 }
 
-module.exports = { maxHeapSort }
+module.exports = { maxHeapSort: statistics(maxHeapSort) }
